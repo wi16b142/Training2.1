@@ -17,10 +17,83 @@
             <RowDefinition Height="107*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="97*"/>
+            <ColumnDefinition Width="97*"/>
         </Grid.ColumnDefinitions>
+
+        <Label Content="Registered users:" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="26" Width="99"/>
+        <Label Content="Chat history:" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="26" Margin="22.6,0,0,0" Width="77"/>
+        <Label Content="Messages from user:" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="26" Margin="1,0,0,0" Width="118"/>
+
+        <Button Content="Start Receiving" Command="{Binding StartBtnClick}" Width="90" Height="20" Grid.Column="2" VerticalAlignment="Top" Margin="0,8,0,0" HorizontalAlignment="Center"/>
+
+        <ListBox Grid.Row="1" Margin="5,5,6.4,5.4" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedUser}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label x:Name="user" Content="{Binding Username}"/>
+                    <DataTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="user" Property="Background" Value="Green"/>
+                        </Trigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ListBox Grid.Row="1" Grid.Column="1" Margin="3.6,5,5,5.4" ItemsSource="{Binding History, UpdateSourceTrigger=PropertyChanged}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TabPanel>
+                        <Label Content="{Binding Name}"/>
+                        <Label Content=": "/>
+                        <Label Content="{Binding Text}"/>
+                    </TabPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Column="2" Grid.Row="1" Margin="5,5,4.6,5.4">
+            <TextBox x:Name="textbox" BorderThickness="1" Text="{Binding SelectedUser.Username}" Margin="5">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="Background" Value="Green"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+                <ListBox Margin="5" ItemsSource="{Binding SelectedUser.Messages}" Height="115" ScrollViewer.CanContentScroll="True">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TabPanel>
+                                <Label Content="{Binding Text}"/>
+                                <Label Content="@"/>
+                                <Label Content="{Binding Timestamp}"/>
+                            </TabPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            <Button Content="Export to CSV" Command="{Binding ExportBtnClick}" Margin="10"/>
+        </StackPanel>
+
 
     </Grid>
 </Window>
