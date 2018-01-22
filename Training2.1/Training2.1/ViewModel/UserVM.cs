@@ -20,7 +20,7 @@ using Training2._1.Model;
 
 namespace Training2._1.ViewModel
 {
-    public class UserVM
+    public class UserVM :ViewModelBase
     {
         private string username;
         private ObservableCollection<Message> messages = new ObservableCollection<Message>();
@@ -36,7 +36,7 @@ namespace Training2._1.ViewModel
             get => username; set
             {
                 username = value;
-                //RaisePropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -45,7 +45,8 @@ namespace Training2._1.ViewModel
             get => messages;
             set
             {
-                messages = value;                
+                messages = value;
+                RaisePropertyChanged();
             }
         }
 

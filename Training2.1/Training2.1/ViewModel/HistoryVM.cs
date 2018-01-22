@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Training2._1.ViewModel
 {
-    public class HistoryVM
+    public class HistoryVM : ViewModelBase
     {
         private string name;
         private string text;
